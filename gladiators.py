@@ -30,7 +30,12 @@ connection.autocommit = True
 #         )
 #     print("[INFO] Table created successful")
 
-#
+# with connection.cursor() as cursor:
+#     cursor.execute(
+#         f"""UPDATE Gladiators
+#             SET bonus_level = 10;"""
+#     )
+
 while True:
     print("Hello Gladiator! you can select one of these options: 1 - Create Gladiator, 2 - level Up")
 
@@ -81,42 +86,55 @@ while True:
 
         # connection.close()
 
+        # if spend_level > int(bonus_level):
+        #     print("You need bonus level to update your gladiators!")
+
         if attributes == "luck":
 
             average_bonus = int(bonus_level) - spend_level
             luck_level = spend_level + int(luck)
-            print(f"Your gladiator has {luck_level} luck")
-            with connection.cursor() as cursor:
-                cursor.execute(
-                    f"""UPDATE Gladiators
-                    SET bonus_level = {average_bonus}, luck = {luck_level};"""
-                )
-            if int(bonus_level) <= 0:
+
+            if int(spend_level) > int(bonus_level) or int(bonus_level) <= 0:
                 print("You need bonus level to update your gladiators!")
+
+            else:
+
+                print(f"Your gladiator has {luck_level} luck")
+                with connection.cursor() as cursor:
+                    cursor.execute(
+                        f"""UPDATE Gladiators
+                                SET bonus_level = {average_bonus}, luck = {luck_level};"""
+                    )
 
         elif attributes == "force":
             average_bonus = int(bonus_level) - spend_level
             force_level = spend_level + int(force)
-            print(f"Your gladiator has {int(force_level)} force")
-            with connection.cursor() as cursor:
-                cursor.execute(
-                    f"""UPDATE Gladiators
-                    SET bonus_level = {average_bonus}, force = {int(force_level)};"""
-                )
-            if int(bonus_level) <= 0:
+
+            if int(spend_level) > int(bonus_level) or int(bonus_level) <= 0:
                 print("You need bonus level to update your gladiators!")
+
+            else:
+                print(f"Your gladiator has {int(force_level)} force")
+                with connection.cursor() as cursor:
+                    cursor.execute(
+                        f"""UPDATE Gladiators
+                        SET bonus_level = {average_bonus}, force = {int(force_level)};"""
+                    )
 
         elif attributes == "health":
             average_bonus = int(bonus_level) - spend_level
             health_level = spend_level + int(health)
-            print(f"Your gladiator has {int(health_level)} health")
-            with connection.cursor() as cursor:
-                cursor.execute(
-                    f"""UPDATE Gladiators
-                    SET bonus_level = {average_bonus}, force = {health_level};"""
-                )
-            if int(bonus_level) <= 0:
+
+            if int(spend_level) > int(bonus_level) or int(bonus_level) <= 0:
                 print("You need bonus level to update your gladiators!")
+
+            else:
+                print(f"Your gladiator has {int(health_level)} health")
+                with connection.cursor() as cursor:
+                    cursor.execute(
+                        f"""UPDATE Gladiators
+                        SET bonus_level = {average_bonus}, force = {health_level};"""
+                    )
 
     else:
         print("Error")
